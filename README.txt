@@ -16,3 +16,10 @@ CREATE DATABASE [NAME];
 а так же в бд нужны 2 таблицы - users и initiatives согласно моделям
 CREATE USER 'user'@'localhost' IDENTIFIED BY 'user';
 GRANT ALL PRIVILEGES ON databaseSpring . * TO 'user'@'localhost';
+
+java 15
+https://www.javahelps.com/2020/09/install-oracle-jdk-15-on-linux.html
+
+start
+mvn install
+java -jar target/demo-0.0.1-SNAPSHOT.jar
