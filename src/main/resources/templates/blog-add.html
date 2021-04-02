@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header.html :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <h3>Подать инициативу</h3>
+    <form action="/blog/add" method="post">
+        <input type="text" name="name" placeholder="Введите тему инициативы" class="form-control"><br>
+    <textarea name="text" placeholder="Опишите вашу проблему/ваше предложение" class="form-control"></textarea><br>
+        <input type="number" name="cost" placeholder="Введите примерную стоимость реализации" class="form-control"><br>
+        <input type="text" name="performerAddress" placeholder="Введите институт, если ваша тема локальна" class="form-control"><br>
+        <button type="submit" class="btn btn-success">Отправить заявку</button>
+    </form>
+
+</div>
+
+<div th:insert="blocks/footer.html :: footer"></div>
+</body>
+</html>

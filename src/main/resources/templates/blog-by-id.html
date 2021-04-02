@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header.html :: header"></header>
+
+<div class="container mt-5">
+    <h3 th:text="${title}"></h3>
+    <div th:each="el : ${initiative}" class = "alert mt-2">
+        <h3 th:text="${el.name}"></h3>
+        <p th:text="'Статус: ' + ${el.status}"></p>
+        <p th:text="${el.text}"></p>
+        <p th:text="'Стоимость: ' + ${el.cost} + ' руб.'"></p>
+        <p th:text="'Автор: ' + ${el.author}"></p>
+        <p th:text="'Локация: ' + ${el.performerAddress}"></p>
+        <br>
+        <a th:href="'/blog/' + ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a>
+        <br>
+        <br>
+        <form th:action="'/blog/' + ${el.id} + '/remove'" method="post">
+            <button class="btn btn-warning" type="submit">Удалить инициативу</button>
+        </form>
+    </div>
+
+</div>
+
+<div th:insert="blocks/footer.html :: footer"></div>
+</body>
+</html>
