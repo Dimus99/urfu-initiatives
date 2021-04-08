@@ -1,7 +1,6 @@
 package com.example.demo.security;
 
 import com.example.demo.models.User;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Data
 public class SecurityUser implements UserDetails {
     private final String username; //можно вообще убрать , но может быть будет нужно при регистрации
     private final String password;
@@ -21,6 +19,10 @@ public class SecurityUser implements UserDetails {
         this.password = password;
         this.authorities = authorities;
         this.isActive = isActive;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     @Override

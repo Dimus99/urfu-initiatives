@@ -23,3 +23,6 @@ https://www.javahelps.com/2020/09/install-oracle-jdk-15-on-linux.html
 start
 mvn install
 java -jar target/demo-0.0.1-SNAPSHOT.jar
+
+or
+mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local"

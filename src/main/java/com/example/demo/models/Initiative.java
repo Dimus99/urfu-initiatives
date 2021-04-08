@@ -1,10 +1,11 @@
 package com.example.demo.models;
 
-import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+
 @Entity
 @Table(name = "initiatives")
 public class Initiative {
@@ -19,8 +20,7 @@ public class Initiative {
     private Integer cost;
     private String author;
     private String performerAddress;
-    //private ??? appendices;
-
+    private  int votesNeed;
 
     public Initiative() {
     }
@@ -32,6 +32,30 @@ public class Initiative {
         this.author = author;
         this.performerAddress = performerAddress;
         this.status = InitiativeStatus.NEW;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "initiative_votes",
+            joinColumns = @JoinColumn(name = "initiative_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> votes = new HashSet<>();
+    public void addVote(User user){
+        this.votes.add(user);
+        user.getVotes().add(this);
+    }
+    public void removeVote(User user) throws Exception {
+        try {
+            this.votes.remove(user);
+            user.getVotes().remove(this);
+        }
+        catch (Exception e){
+            throw new Exception("не получилось удалить голос");
+        }
+    }
+
+    public int getVotesCount(){
+        return votes.size();
     }
 
     public Long getId() {
@@ -88,5 +112,13 @@ public class Initiative {
 
     public void setPerformerAddress(String performerAddress) {
         this.performerAddress = performerAddress;
+    }
+
+    public int getVotesNeed() {
+        return votesNeed;
+    }
+
+    public void setVotesNeed(int votesNeed) {
+        this.votesNeed = votesNeed;
     }
 }
