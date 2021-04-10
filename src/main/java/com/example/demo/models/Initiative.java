@@ -18,40 +18,52 @@ public class Initiative {
     @Enumerated(value = EnumType.STRING)
     private InitiativeStatus status;
     private Integer cost;
-    private String author;
-    private String performerAddress;
-    private  int votesNeed;
-
-    public Initiative() {
-    }
-
-    public Initiative(String name, String text, Integer cost, String author, String performerAddress) {
-        this.name = name;
-        this.text = text;
-        this.cost = cost;
-        this.author = author;
-        this.performerAddress = performerAddress;
-        this.status = InitiativeStatus.NEW;
-    }
-
-    @ManyToMany
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "initiative_authors",
+            joinColumns = @JoinColumn(name = "initiative_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private User author;
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "initiative_votes",
             joinColumns = @JoinColumn(name = "initiative_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> votes = new HashSet<>();
+    private String performerAddress;
+    private int votesNeed;
+    private boolean expertApproval;
+
+    public Initiative() {
+    }
+
+    public Initiative(String name, String text, Integer cost, User author, String performerAddress) {
+        this.name = name;
+        this.text = text;
+        this.cost = cost;
+        this.setAuthor(author);
+        this.performerAddress = performerAddress;
+        this.status = InitiativeStatus.NEW;
+        this.votesNeed = 100000;
+        this.expertApproval = false;
+    }
+
     public void addVote(User user){
         this.votes.add(user);
         user.getVotes().add(this);
     }
     public void removeVote(User user) throws Exception {
         try {
-            this.votes.remove(user);
-            user.getVotes().remove(this);
+            this.votes.removeIf(x-> x.getId().equals(user.getId()));
+            user.getVotes().removeIf(x->x.getId().equals(this.getId()));
         }
         catch (Exception e){
             throw new Exception("не получилось удалить голос");
         }
+    }
+
+    public boolean isApproved(){
+        return this.getVotesCount() >= this.votesNeed || this.expertApproval;
     }
 
     public int getVotesCount(){
@@ -98,12 +110,13 @@ public class Initiative {
         this.cost = cost;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(User author) {
         this.author = author;
+        author.addInitiative(this);
     }
 
     public String getPerformerAddress() {
@@ -120,5 +133,13 @@ public class Initiative {
 
     public void setVotesNeed(int votesNeed) {
         this.votesNeed = votesNeed;
+    }
+
+    public boolean isExpertApproval() {
+        return expertApproval;
+    }
+
+    public void setExpertApproval(boolean expertApploval) {
+        this.expertApproval = expertApploval;
     }
 }

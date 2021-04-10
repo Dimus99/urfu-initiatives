@@ -9,14 +9,12 @@ import java.util.Collection;
 import java.util.List;
 
 public class SecurityUser implements UserDetails {
-    private final String username; //можно вообще убрать , но может быть будет нужно при регистрации
-    private final String password;
+    private final String name;
     private final List<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
 
     public SecurityUser(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
-        this.username = username;
-        this.password = password;
+        this.name = username;
         this.authorities = authorities;
         this.isActive = isActive;
     }
@@ -32,12 +30,13 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return null;
     }
+
 
     @Override
     public String getUsername() {
-        return username;
+        return name;
     }
 
     @Override
@@ -63,7 +62,7 @@ public class SecurityUser implements UserDetails {
     public static UserDetails fromUser(User user){
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
-                user.getPassword(),
+                "",
                 true,
                 true,
                 true,

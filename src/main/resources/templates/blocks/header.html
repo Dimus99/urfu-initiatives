@@ -14,7 +14,7 @@
             <a class="btn btn-outline-primary" href="/login">Войти</a>
         </div>
         <div th:if="${#httpServletRequest.remoteUser}">
-            <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+            <h1 th:inline="text">тут могло быть ваше имя!</h1>
             <form th:action="@{/logout}" method="post">
                 <input type="submit" value="Выйти"/>
             </form>

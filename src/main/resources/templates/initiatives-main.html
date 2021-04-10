@@ -9,11 +9,10 @@
 <header th:insert="blocks/header.html :: header"></header>
 
 <div class="container mt-5">
-    <h3 th:text="${title}"></h3>
     <div th:each="initiative : ${initiatives}" class = "alert mt-2">
         <h3 th:text="${initiative.name}"></h3>
         <p th:text="${initiative.status}"></p>
-        <p th:text="${initiative.author}"></p>
+        <p th:text="${initiative.author.getName()}"></p>
         <p th:text="${initiative.performerAddress}"></p>
         <a th:href="'/initiatives/' + ${initiative.id}" class="btn btn-warning">Посмотреть</a>
     </div>

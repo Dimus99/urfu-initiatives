@@ -12,9 +12,11 @@
     <div th:each="el : ${initiative}" class="alert mt-2">
         <h3 th:text="${el.name}"></h3>
         <p th:text="'Статус: ' + ${el.status}"></p>
+        <p th:if="${isApproved}"><b>Заявка одобрена</b></p>
+        <p th:if="${not isApproved}"><b>Заявка ещё не одобрена</b></p>
         <p th:text="${el.text}"></p>
         <p th:text="'Стоимость: ' + ${el.cost} + ' руб.'"></p>
-        <p th:text="'Автор: ' + ${el.author}"></p>
+        <p th:text="'Автор: ' + ${el.author.getName() + ' ' + el.author.getEmail()}"></p>
         <p th:text="'Локация: ' + ${el.performerAddress}"></p>
         <br>
         <div th:if="${isVotedStatus}">
@@ -28,7 +30,7 @@
             <p th:text="'Голосов нужно: ' + ${el.votesNeed}"></p>
             <br>
         </div>
-        <div th:if="${el.author} == ${userName}">
+        <div th:if="${isAuthor}">
             <a th:href="'/initiatives/' + ${el.id} + '/edit-my'" class="btn btn-warning">Редактировать мою заявку</a>
             <br>
             <br>

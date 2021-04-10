@@ -24,8 +24,6 @@
                       class="form-control"/><br>
             <input type="number" th:value="${el.cost}" name="cost" placeholder="Введите примерную стоимость реализации"
                    class="form-control"><br>
-            <input th:if="${isManage}" type="text" name="author" th:value="${el.author}"
-                   placeholder="Введите ваше ФИО, институт, факультет, номер группы" class="form-control"><br>
             <input type="text" name="performerAddress" th:value="${el.performerAddress}"
                    placeholder="Введите институт, если ваша тема локальна" class="form-control"><br>
             <div th:if="${isManage}">
