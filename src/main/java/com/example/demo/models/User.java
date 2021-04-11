@@ -75,12 +75,12 @@ public class User {
         initiatives.add(initiative);
     }
 
-    public boolean equals(User other){
+    public boolean equals(User other) {
         return this.id.equals(other.id);
     }
 
     public String getUsername() {
-        return id;
+        return email;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

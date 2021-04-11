@@ -3,13 +3,9 @@ package com.example.demo.controllers;
 import com.example.demo.models.*;
 import com.example.demo.repos.InitiativeRepo;
 import com.example.demo.repos.UserRepo;
-import com.example.demo.security.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
@@ -74,7 +69,6 @@ public class InitiativesController {
             }
         } else {
             file = null;
-            nameFile = null;
         }
         var initiative = new Initiative(name, text, cost, user, performerAddress, nameFile);
         initiativeRepo.save(initiative);
@@ -102,13 +96,13 @@ public class InitiativesController {
         model.addAttribute("isAuthor", initiative.getAuthor().equals(user));
         model.addAttribute("isManage", isManage);
         model.addAttribute("votesCount", initiative.getVotesCount());
-        model.addAttribute("isVoted", user.getVotes().stream().anyMatch(x->x.getId().equals(initiative.getId())));
+        model.addAttribute("isVoted", user.getVotes().stream().anyMatch(x -> x.getId().equals(initiative.getId())));
         model.addAttribute("isVotedStatus",
                 initiative.getStatus().equals(InitiativeStatus.STUDENT_VOTE));
         model.addAttribute("isApproved", initiative.isApproved());
         model.addAttribute("isExpertVote",
                 initiative.getStatus().equals(InitiativeStatus.EXPERT_VOTE)
-                        && (user.getRole().equals(Role.EXPERT) || user.getRole().equals(Role.ADMIN) ));
+                        && (user.getRole().equals(Role.EXPERT) || user.getRole().equals(Role.ADMIN)));
         return "initiative-by-id";
     }
 
@@ -222,7 +216,7 @@ public class InitiativesController {
 
     @PostMapping("/initiatives/{id}/expertVote")
     public String initiativeExpertVoting(@PathVariable(value = "id") Long id,
-                                   Model model) {
+                                         Model model) {
         Initiative initiative = initiativeRepo.findById(id).orElseThrow();
         initiative.setExpertApproval(true);
         initiativeRepo.save(initiative);
@@ -231,7 +225,7 @@ public class InitiativesController {
 
     @PostMapping("/initiatives/{id}/expertVoteRemove")
     public String initiativeExpertVotingRemove(@PathVariable(value = "id") Long id,
-                                         Model model) throws Exception {
+                                               Model model) throws Exception {
         Initiative initiative = initiativeRepo.findById(id).orElseThrow();
         initiative.setExpertApproval(false);
         initiativeRepo.save(initiative);

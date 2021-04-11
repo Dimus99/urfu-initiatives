@@ -50,25 +50,25 @@ public class Initiative {
         this.filePath = filePath;
     }
 
-    public void addVote(User user){
+    public void addVote(User user) {
         this.votes.add(user);
         user.getVotes().add(this);
     }
+
     public void removeVote(User user) throws Exception {
         try {
-            this.votes.removeIf(x-> x.getId().equals(user.getId()));
-            user.getVotes().removeIf(x->x.getId().equals(this.getId()));
-        }
-        catch (Exception e){
+            this.votes.removeIf(x -> x.getId().equals(user.getId()));
+            user.getVotes().removeIf(x -> x.getId().equals(this.getId()));
+        } catch (Exception e) {
             throw new Exception("не получилось удалить голос");
         }
     }
 
-    public boolean isApproved(){
+    public boolean isApproved() {
         return this.getVotesCount() >= this.votesNeed || this.expertApproval;
     }
 
-    public int getVotesCount(){
+    public int getVotesCount() {
         return votes.size();
     }
 
@@ -141,8 +141,8 @@ public class Initiative {
         return expertApproval;
     }
 
-    public void setExpertApproval(boolean expertApploval) {
-        this.expertApproval = expertApploval;
+    public void setExpertApproval(boolean expertApproval) {
+        this.expertApproval = expertApproval;
     }
 
     public String getFilePath() {

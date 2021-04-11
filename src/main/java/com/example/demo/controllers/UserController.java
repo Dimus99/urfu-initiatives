@@ -50,8 +50,8 @@ public class UserController {
         if (!userMy.getRole().equals(Role.ADMIN))
             return "redirect:/";
         var user = userRepo.findById(id).orElseThrow();
-       user.setRole(Role.valueOf(role));
-       userRepo.save(user);
+        user.setRole(Role.valueOf(role));
+        userRepo.save(user);
         return "redirect:/users";
     }
 }

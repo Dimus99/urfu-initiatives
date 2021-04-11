@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -26,21 +25,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/").and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/about").permitAll()
+                .antMatchers("/", "/about").permitAll()
                 //.antMatchers("/users").hasRole(Role.ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-        .loginPage("/login").permitAll()
-        .defaultSuccessUrl("/");
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/");
     }
 
     @Bean
-    public PrincipalExtractor principalExtractor(UserRepo userRepo){
+    public PrincipalExtractor principalExtractor(UserRepo userRepo) {
         return map -> {
-            String  id =  (String) map.get("sub");
-            User user = userRepo.findById(id).orElseGet(()->{
+            String id = (String) map.get("sub");
+            User user = userRepo.findById(id).orElseGet(() -> {
                 User newUser = new User();
                 newUser.setId(id);
                 newUser.setName((String) map.get("name"));
