@@ -9,6 +9,13 @@
 <header th:insert="blocks/header.html :: header"></header>
 
 <h1>Управление пользователями</h1>
+<div th:each="user : ${users}" class="block-list container">
+    <p th:text="${user.getName()}" class="mt-1 mb-1"></p>
+    <p th:text="${user.getEmail()}" class="mt-1 mb-1"></p>
+    <p th:text="${user.getRole().name()}" class="mt-1 mb-1"></p>
+    <a th:href="'/users/' + ${user.getId()} +'/edit'" class="mt-0">изменить пользователя</a>
+    <br><br>
+</div>
 
 <div th:insert="blocks/footer.html :: footer"></div>
 </body>

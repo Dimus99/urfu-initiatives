@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Редактирование</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header.html :: header"></header>
+
+<div class="container mt-5 mb-5">
+
+  <p th:text="${user.getName()}"></p>
+  <p th:text="${user.getEmail()}"></p>
+  <div class="alert mt-2">
+
+    <form method="post">
+      <div>
+        <select name="role">
+          <option th:text="${user.getRole()}"></option>
+          <option th:each="otherRole : ${roles}" th:text="${otherRole}"></option>
+        </select><br>
+      </div>
+      </div>
+      <button type="submit" class="btn btn-success">Обновить пользователя</button>
+    </form>
+  </div>
+
+</div>
+
+<div th:insert="blocks/footer.html :: footer"></div>
+</body>
+</html>

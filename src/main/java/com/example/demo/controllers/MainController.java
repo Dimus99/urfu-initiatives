@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import com.example.demo.repos.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,18 +13,11 @@ import java.util.Map;
 
 @Controller
 public class MainController {
+
     @GetMapping("/about")
     public String about(Model model) {
         model.addAttribute("title", "Информация о нас");
-        //model.addAttribute();
         return "about";
-    }
-
-    @GetMapping("/users")
-    @PreAuthorize("hasAuthority('users:manage')")
-    public String users(Model model) {
-        model.addAttribute("title", "users");
-        return "users";
     }
 
     @GetMapping("/")
@@ -32,5 +27,4 @@ public class MainController {
         model.addAttribute("data", map);
         return "home";
     }
-
 }

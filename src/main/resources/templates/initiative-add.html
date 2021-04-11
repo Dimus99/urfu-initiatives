@@ -10,11 +10,13 @@
 
 <div class="container mt-5 mb-5">
     <h3>Подать инициативу</h3>
-    <form action="/initiatives/add" method="post">
+    <form action="/initiatives/add" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="Введите тему инициативы" class="form-control"><br>
     <textarea name="text" placeholder="Опишите вашу проблему/ваше предложение" class="form-control"></textarea><br>
         <input type="number" name="cost" placeholder="Введите примерную стоимость реализации" class="form-control"><br>
         <input type="text" name="performerAddress" placeholder="Введите институт, если ваша тема локальна" class="form-control"><br>
+    <p>File to upload:</p> <input type="file" name="file">
+
         <button type="submit" class="btn btn-success">Отправить заявку</button>
     </form>
 

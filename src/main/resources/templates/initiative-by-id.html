@@ -18,7 +18,18 @@
         <p th:text="'Стоимость: ' + ${el.cost} + ' руб.'"></p>
         <p th:text="'Автор: ' + ${el.author.getName() + ' ' + el.author.getEmail()}"></p>
         <p th:text="'Локация: ' + ${el.performerAddress}"></p>
+        <p th:if="${el.filePath}" th:text="'файл есть'"></p>
         <br>
+
+        <div th:if="${isExpertVote}">
+            <form th:if="${not el.isExpertApproval()}" th:action="'/initiatives/' + ${el.id} + '/expertVote'" method="post">
+                <button class="btn btn-warning" type="submit">Утвердить экспертное решение</button>
+            </form>
+            <form th:if="${el.isExpertApproval()}" th:action="'/initiatives/' + ${el.id} + '/expertVoteRemove'" method="post">
+                <button class="btn btn-warning" type="submit">Отменить утверждение</button>
+            </form>
+            <br>
+        </div>
         <div th:if="${isVotedStatus}">
             <form th:if="${not isVoted}" th:action="'/initiatives/' + ${el.id} + '/vote'" method="post">
                 <button class="btn btn-warning" type="submit">Проголосовать за</button>

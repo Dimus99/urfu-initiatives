@@ -33,11 +33,12 @@ public class Initiative {
     private String performerAddress;
     private int votesNeed;
     private boolean expertApproval;
+    private String filePath;
 
     public Initiative() {
     }
 
-    public Initiative(String name, String text, Integer cost, User author, String performerAddress) {
+    public Initiative(String name, String text, Integer cost, User author, String performerAddress, String filePath) {
         this.name = name;
         this.text = text;
         this.cost = cost;
@@ -46,6 +47,7 @@ public class Initiative {
         this.status = InitiativeStatus.NEW;
         this.votesNeed = 100000;
         this.expertApproval = false;
+        this.filePath = filePath;
     }
 
     public void addVote(User user){
@@ -141,5 +143,13 @@ public class Initiative {
 
     public void setExpertApproval(boolean expertApploval) {
         this.expertApproval = expertApploval;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

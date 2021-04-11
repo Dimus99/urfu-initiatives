@@ -1,7 +1,10 @@
 package com.example.demo.models;
 
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -74,5 +77,13 @@ public class User {
 
     public boolean equals(User other){
         return this.id.equals(other.id);
+    }
+
+    public String getUsername() {
+        return id;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.getRole().getAuthorities();
     }
 }
